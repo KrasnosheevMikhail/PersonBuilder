@@ -4,27 +4,28 @@ public class PersonBuilder {
     protected String name;
     protected String surname;
     protected String city;
-    protected OptionalInt age;
+    protected int age;
 
-    public PersonBuilder setName(String name) {
+    OptionalInt OptAge = OptionalInt.of(age);
+
+    public PersonBuilder setName(String name) throws IllegalArgumentException {
         this.name = name;
         return this;
     }
 
-    public PersonBuilder setSurname(String surname) {
+    public PersonBuilder setSurname(String surname) throws IllegalArgumentException {
         this.surname = surname;
         return this;
     }
 
     public OptionalInt getAge() {
-        return age;
+        return OptAge;
     }
 
     public PersonBuilder setAge(int age) throws IllegalArgumentException {
         if (age < 0) throw new IllegalArgumentException("Возраст не может быть отрицательным!");
-        this.age = OptionalInt.of(age);
+        this.age = age;
         return this;
-
     }
 
     public PersonBuilder setAddress(String address) {
@@ -33,7 +34,13 @@ public class PersonBuilder {
     }
 
     public Person build() throws IllegalArgumentException {
-        if (name == null || surname == null) throw new IllegalArgumentException("Не все данные указаны");
-        return new Person(name, surname, age, city);
+        Person person;
+        if (name == null || surname == null)
+            throw new IllegalArgumentException("Не все данные указаны");
+        if (age < 0) {
+            person = new Person(name, surname);
+        } else person = new Person(name, surname, age);
+        person.setAddress(city);
+        return person;
     }
 }

@@ -1,32 +1,28 @@
+import java.util.Objects;
 import java.util.OptionalInt;
 
 public class Person {
     protected final String name;
     protected final String surname;
     protected String city;
-    protected OptionalInt age;
+    protected int age;
 
-
-    public Person(String name, String surname, OptionalInt age, String city) {
-        this.name = name;
-        this.surname = surname;
-        this.age = age;
-        this.city = city;
-    }
+    OptionalInt OptAge = OptionalInt.of(age);
 
 
     public Person(String name, String surname) {
-        this(name, surname, OptionalInt.empty(), null);
+        this.name = name;
+        this.surname = surname;
     }
 
-
     public Person(String name, String surname, int age) {
-        this(name, surname, OptionalInt.of(age), null);
+        this.name = name;
+        this.surname = surname;
+        this.age = age;
     }
 
     public boolean hasAge() {
-
-        return age.isPresent();
+        return OptAge.isPresent();
     }
 
     public boolean hasAddress() {
@@ -42,7 +38,7 @@ public class Person {
     }
 
     public OptionalInt getAge() {
-        return age;
+        return OptAge;
     }
 
     public String getAddress() {
@@ -54,26 +50,25 @@ public class Person {
     }
 
     public void happyBirthday() {
-        if (hasAge()) {
-            age = OptionalInt.of(age.getAsInt() + 1);
-        }
+        if (hasAge()) age++;
     }
-
 
     @Override
     public String toString() {
-        return "Person  " + "name: " + name + "\n" + "surname: " + surname + "\n" +
-                "age: " + age + "\n" + "adress: " + city + "\n";
-
+        return "Person {" + "name: " + name + ", surname: " + surname
+                + ", age: " + age + ", adress: " + city + "}";
     }
 
     public PersonBuilder newChildBuilder() {
         return new PersonBuilder()
                 .setSurname(surname)
-                .setAge(age.getAsInt())
                 .setAddress(city);
-
-
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getSurname(), getAge(), getAddress());
+    }
+
 
 }
