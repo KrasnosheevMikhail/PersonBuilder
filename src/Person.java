@@ -5,9 +5,7 @@ public class Person {
     protected final String name;
     protected final String surname;
     protected String city;
-    protected int age;
-
-    OptionalInt OptAge = OptionalInt.of(age);
+    protected OptionalInt age;
 
 
     public Person(String name, String surname) {
@@ -18,11 +16,11 @@ public class Person {
     public Person(String name, String surname, int age) {
         this.name = name;
         this.surname = surname;
-        this.age = age;
+        this.age = OptionalInt.of(age);
     }
 
     public boolean hasAge() {
-        return OptAge.isPresent();
+        return age != null && age.isPresent();
     }
 
     public boolean hasAddress() {
@@ -38,8 +36,10 @@ public class Person {
     }
 
     public OptionalInt getAge() {
-        return OptAge;
+        if (age == null || age.isEmpty()) return age.empty();
+        return age;
     }
+
 
     public String getAddress() {
         return city;
@@ -50,13 +50,17 @@ public class Person {
     }
 
     public void happyBirthday() {
-        if (hasAge()) age++;
+        if (hasAge()) {
+            age = OptionalInt.of(age.getAsInt() + 1);
+        }
+        ;
     }
 
     @Override
     public String toString() {
         return "Person {" + "name: " + name + ", surname: " + surname
-                + ", age: " + age + ", adress: " + city + "}";
+                + ", age: " + (hasAge() ? age.getAsInt() : "возраст неизвестен") +
+                ", address: " + (hasAddress() ? city : "адресс не указан") + "}";
     }
 
     public PersonBuilder newChildBuilder() {
@@ -69,6 +73,5 @@ public class Person {
     public int hashCode() {
         return Objects.hash(getName(), getSurname(), getAge(), getAddress());
     }
-
 
 }

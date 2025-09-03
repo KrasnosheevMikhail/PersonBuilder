@@ -12,7 +12,14 @@ public class Main {
                 .build();
         System.out.println("У " + mom + " есть сын, " + son);
 
-        try {
+        /*Person person = new PersonBuilder()
+                .setName("Антошка")
+                .setSurname("Лопатов")
+                .setAge(48)
+                .build();
+        System.out.println(person);*/
+
+        /*try {
             Person errPerson = new PersonBuilder().build();
         } catch (IllegalStateException e) {
             e.printStackTrace();
@@ -22,6 +29,6 @@ public class Main {
             Person errPerson = new PersonBuilder().setAge(-100).build();
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 }
