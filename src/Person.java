@@ -36,10 +36,8 @@ public class Person {
     }
 
     public OptionalInt getAge() {
-        if (age == null || age.isEmpty()) return age.empty();
         return age;
     }
-
 
     public String getAddress() {
         return city;
@@ -53,7 +51,6 @@ public class Person {
         if (hasAge()) {
             age = OptionalInt.of(age.getAsInt() + 1);
         }
-        ;
     }
 
     @Override

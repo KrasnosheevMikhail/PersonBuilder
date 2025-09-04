@@ -5,7 +5,6 @@ public class PersonBuilder {
     protected String surname;
     protected String city;
     protected OptionalInt age;
-    ;
 
 
     public PersonBuilder setName(String name) {
@@ -19,7 +18,6 @@ public class PersonBuilder {
     }
 
     public OptionalInt getAge() {
-        if (age == null || age.isEmpty()) return age.empty();
         return age;
     }
 
