@@ -36,7 +36,7 @@ public class Person {
     }
 
     public OptionalInt getAge() {
-        return age;
+        return hasAge() ? age : OptionalInt.empty();
     }
 
     public String getAddress() {
@@ -56,7 +56,7 @@ public class Person {
     @Override
     public String toString() {
         return "Person {" + "name: " + name + ", surname: " + surname
-                + ", age: " + (hasAge() ? age.getAsInt() : "возраст неизвестен") +
+                + ", age: " + (hasAge() ? age.getAsInt() : "возраст не указан") +
                 ", address: " + (hasAddress() ? city : "адресс не указан") + "}";
     }
 
